@@ -11,21 +11,21 @@ jobs:
       - checkout
       - run:
           name: Update npm
-          command: 'sudo npm install -g npm@latest'
+          command: cd contracts && sudo npm install -g npm@latest
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Install npm wee
-          command: npm install
+          command: cd contracts && npm install
       - run:
           name: Migrate Contracts
-          command: ./node_modules/truffle/build/cli.bundled.js migrate --network development
+          command: cd contracts && ./node_modules/truffle/build/cli.bundled.js migrate --network development
       - run:
           name: Test Contracts
-          command: ./node_modules/truffle/build/cli.bundled.js test --network development
+          command: cd contracts && ./node_modules/truffle/build/cli.bundled.js test --network development
       - run:
           name: Test coverage
-          command: ./node_modules/.bin/solidity-coverage
+          command: cd contracts && ./node_modules/.bin/solidity-coverage
         # Send notification to chatwork
       - run:
           name: Sending notification
